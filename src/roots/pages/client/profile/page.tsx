@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useContext, useEffect } from "react";
+import { AuthContext } from "../../../../contexts/auth.context";
+import { useNavigate } from "react-router-dom";
 
-const ProfilePage:React.FC = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+const ProfilePage: React.FC = () => {
+  const { userCurrent } = useContext(AuthContext);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!userCurrent) navigate("/auth/login");
+  }, []);
+  return <div>profile</div>;
+};
 
-export default ProfilePage
+export default ProfilePage;

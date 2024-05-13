@@ -1,5 +1,5 @@
 import React from "react";
-import { IVideo } from "../hooks/type";
+import { IVideo } from "../../hooks/type";
 
 interface ICardVideoProps {
   video: IVideo;
@@ -17,7 +17,7 @@ const CardVideo: React.FC<ICardVideoProps> = ({
         <img
           src={video.image}
           alt={video.name}
-          className="min-w-full h-48 object-cover rounded-xl"
+          className="min-w-full h-48 md:h-56 object-cover rounded-xl"
         />
       </div>
       <div className="flex flex-row justify-start items-start">

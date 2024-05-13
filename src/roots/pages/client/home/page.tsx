@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import useVideoClient from "../../../../hooks/useVideoClient.hook";
 import ForEach from "../../../../libs/utils/foreach";
 import { IVideo } from "../../../../hooks/type";
-import CardVideo from "../../../../components/CardVideo";
+import CardVideo from "../../../../components/videos/CardVideo";
 import { useNavigate } from "react-router-dom";
 
 const HomePage: React.FC = () => {
@@ -13,7 +13,7 @@ const HomePage: React.FC = () => {
   }, []);
   return (
     <div>
-      <ul className="grid gap-6 md:gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <ul className="grid gap-6 md:gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         <ForEach
           list={videos}
           render={(_index: number, item: IVideo) => {
