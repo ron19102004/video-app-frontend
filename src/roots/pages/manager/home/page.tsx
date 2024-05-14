@@ -5,7 +5,7 @@ const HomeManagerPage: React.FC = () => {
   useEffect(() => {
     console.log(userCurrent);
   }, []);
-  return <div>home admin</div>;
+  return <div>home manager</div>;
 };
 
 export default HomeManagerPage;

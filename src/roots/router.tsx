@@ -1,7 +1,13 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import Error404Page from "./errors/page404.error";
 import { HomeAdminPage, ReportAdminPage, AdminLayout } from "./pages/admin";
-import { ClientLayout, HomePage, ProfilePage, VideoPlayer } from "./pages/client";
+import {
+  ClientLayout,
+  HomePage,
+  ProfilePage,
+  VideoPlayerPage,
+  VideosNewPage,
+} from "./pages/client";
 import { HomeManagerPage, ManagerLayout } from "./pages/manager";
 import { LoginFormPage, RegisterFormPage, AuthLayout } from "./auth";
 
@@ -20,13 +26,14 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "video/:slug",
-        element: <VideoPlayer />,
+        path: "video/:uploaderId/:slug",
+        element: <VideoPlayerPage />,
       },
+      { path: "videos/new", element: <VideosNewPage /> },
       {
-        path:"profile",
-        element: <ProfilePage/>
-      }
+        path: "profile",
+        element: <ProfilePage />,
+      },
     ],
   },
   {

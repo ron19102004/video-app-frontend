@@ -1,20 +1,32 @@
-import React, { useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import { AuthContext } from "../../../contexts/auth.context";
 import { NavTopClient } from "../../../components/nav";
 import { SideBar } from "../../../components/nav";
 
 const ClientLayout: React.FC = () => {
-  const { userCurrent } = useContext(AuthContext);
+  const [isOpenSideBar, setIsOpenSideBar] = useState<boolean>(false);
+  useEffect(() => {
+    if (window.innerWidth >= 1024) {
+      setIsOpenSideBar(true);
+    }
+  }, []);
   return (
     <section className="min-w-screen min-h-screen bg-bg-color text-white">
       <NavTopClient
-        className="w-full bg-color h-16"
-        menuMobileOnClick={() => {}}
+        className="w-full bg-color h-16 fixed bg-bg-color z-50"
+        menuMobileOnClick={() => {
+          setIsOpenSideBar(!isOpenSideBar);
+        }}
       />
-      <div className="lg:flex min-h-screen">
-        <SideBar className="hidden lg:block w-72 min-h-full" />
-        <main className="flex-1 px-4">
+      <div className="lg:flex min-h-screen pt-16">
+        <SideBar
+          className="transition-all max-h-screen overflow-auto"
+          isOpen={isOpenSideBar}
+          changeOpen={() => {
+            setIsOpenSideBar(false);
+          }}
+        />
+        <main className="flex-1 px-4 max-h-screen overflow-auto">
           <Outlet />
         </main>
       </div>

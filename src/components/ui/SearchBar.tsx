@@ -1,11 +1,12 @@
 import React from "react";
 import { SearchIcon } from "../../assets";
+import { ClassValue } from "clsx";
 
 interface ISearchBarProps {
-  className?: string;
+  className?: ClassValue;
   placeholder?: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  value: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string;
   onSearch: () => void;
 }
 const SearchBar: React.FC<ISearchBarProps> = ({
@@ -20,16 +21,16 @@ const SearchBar: React.FC<ISearchBarProps> = ({
       <input
         type="text"
         value={value}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          onChange(e);
-        }}
+        onChange={onChange}
         placeholder={placeholder}
         className={`outline-none bg-bg-color ring-1 ring-bg-container-color focus:ring-primary-content-color h-10 sm:w-80 md:w-96 px-4 rounded-s-full mr-[0.13rem]`}
       />
-      <button className="flex justify-center items-center h-10 w-14 md:w-16 ring-1 ring-bg-container-color bg-bg-container-color hover:bg-primary-content-color rounded-e-full" onClick={onSearch}>
+      <button
+        className="flex justify-center items-center h-10 w-14 md:w-16 ring-1 ring-bg-container-color bg-bg-container-color hover:bg-primary-content-color rounded-e-full"
+        onClick={onSearch}
+      >
         <img src={SearchIcon} alt="search-icon" className="w-5 h-5" />
       </button>
-
     </div>
   );
 };

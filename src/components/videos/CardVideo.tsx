@@ -1,18 +1,17 @@
 import React from "react";
 import { IVideo } from "../../hooks/type";
+import { ClassValue } from "clsx";
 
 interface ICardVideoProps {
   video: IVideo;
-  onClick: () => void;
-  className?: string;
+  className?: ClassValue;
 }
-const CardVideo: React.FC<ICardVideoProps> = ({
-  video,
-  onClick,
-  className,
-}) => {
+const CardVideo: React.FC<ICardVideoProps> = ({ video, className }) => {
   return (
-    <div onClick={onClick} className={`${className} min-w-full cursor-pointer`}>
+    <a
+      href={`/video/${video.uploader.id}/${video.slug}`}
+      className={`${className} min-w-full cursor-pointer`}
+    >
       <div className="rounded-xl pb-2">
         <img
           src={video.image}
@@ -30,10 +29,12 @@ const CardVideo: React.FC<ICardVideoProps> = ({
         </div>
         <div className="flex-1">
           <h1 className="text-ellipsis line-clamp-2 font-bold">{video.name}</h1>
-          <h3 className="text-ellipsis line-clamp-1">{video.uploader.fullName}</h3>
+          <h3 className="text-ellipsis line-clamp-1">
+            {video.uploader.fullName}
+          </h3>
         </div>
       </div>
-    </div>
+    </a>
   );
 };
 

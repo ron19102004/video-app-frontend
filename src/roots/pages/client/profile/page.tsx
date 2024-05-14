@@ -8,7 +8,7 @@ const ProfilePage: React.FC = () => {
   useEffect(() => {
     if (!userCurrent) navigate("/auth/login");
   }, []);
-  return <div>profile</div>;
+  return <div>COMING SOON</div>;
 };
 
 export default ProfilePage;

@@ -1,27 +1,48 @@
+import { ClassValue } from "clsx";
 import React from "react";
 import { NavLink } from "react-router-dom";
+import cn from "../../libs/utils/cn";
 
 export interface IMenuProps {
-  className?: string;
+  className?: ClassValue;
   to: string;
   icon: string;
   title: string;
+  isOpen?: boolean;
+  onClick?: () => void;
 }
 
-const Menu: React.FC<IMenuProps> = ({ className, to, title, icon }) => {
+const Menu: React.FC<IMenuProps> = ({
+  className,
+  to,
+  title,
+  icon,
+  isOpen,
+  onClick,
+}) => {
   return (
     <NavLink
       to={to}
+      onClick={onClick}
       className={({ isActive }) =>
-        `flex flex-col md:flex-row items-center space-x-4 py-2 px-3  rounded-lg h-14 ${
-          isActive ? ` font-bold bg-primary-content-color ` : ` `
-        } ${className}`
+        cn(
+          "rounded-lg",
+          {
+            "font-extrabold text-primary-content-color": isActive,
+          },
+          className
+        )
       }
     >
-      <div>
-        <img src={icon} alt={icon} className="w-6 h-6" />
+      <div
+        className={cn("flex", {
+          "flex-row items-center space-x-4 px-3 lg:h-12": isOpen,
+          "flex-col justify-center items-center ": !isOpen,
+        })}
+      >
+        <img src={icon} alt={icon} className="w-7 h-7" />
+        <h1 className="">{title}</h1>
       </div>
-      <h1 className="text-base">{title}</h1>
     </NavLink>
   );
 };

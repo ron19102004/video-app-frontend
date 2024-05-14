@@ -4,11 +4,13 @@ import MenuIcon from "./menuIcon.png"
 import HomeIcon from "./home_icon.png"
 import UserIcon from "./user_icon1.png"
 import NewIcon from "./newIcon.png"
+import ManagerIcon from "./managerIcon.png"
 export {
     VideoLogo,
     SearchIcon,
     MenuIcon,
     HomeIcon,
     UserIcon,
-    NewIcon
+    NewIcon,
+    ManagerIcon
 }

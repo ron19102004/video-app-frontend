@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { create } from "zustand";
 import { IUser } from "./type";
@@ -10,19 +11,25 @@ export interface ILoginProps {
   username: string;
   password: string;
 }
+export interface IRegisterProps {
+  username: string | undefined;
+  email: string | undefined;
+  password: string | undefined;
+  fullName: string | undefined;
+  phone: string | undefined;
+}
 export interface IHookAuthProps {
-  isAuthenticated: boolean;
   isLoggingIn: boolean;
   isErrorLogIn: boolean;
   userCurrent: IUser | undefined;
   accessToken: string | undefined;
   login: (data: ILoginProps, navigate: NavigateFunction) => Promise<void>;
+  register: (data: IRegisterProps, navigate: NavigateFunction) => Promise<void>;
   logout: (navigate: NavigateFunction) => void;
   checkLoginStart: () => void;
 }
 
 const useAuth = create<IHookAuthProps>((set) => ({
-  isAuthenticated: false,
   isLoggingIn: false,
   isErrorLogIn: false,
   userCurrent: undefined,
@@ -48,6 +55,8 @@ const useAuth = create<IHookAuthProps>((set) => ({
         }));
         Cookies.set("access-token", data_res.token, { expires: 4 });
         navigate("/");
+      } else {
+        alert(response?.data?.message);
       }
     } catch (error) {
       console.log(error);
@@ -92,6 +101,19 @@ const useAuth = create<IHookAuthProps>((set) => ({
           .catch((err) => {
             console.log(err);
           });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  register: async (data: IRegisterProps, navigate: NavigateFunction) => {
+    try {
+      const response = await axios.post(myApi.url("auth/register"), data);
+      if (response.status === 200) {
+        alert(response.data.message);
+        if (response.data.status) {
+          navigate("/auth/login");
+        }
       }
     } catch (error) {
       console.log(error);

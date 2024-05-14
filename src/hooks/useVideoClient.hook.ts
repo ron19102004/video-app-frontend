@@ -8,6 +8,9 @@ export interface IHookVideoClientProps {
   isFetching: boolean;
   fetchVideos: (pageNumber: number) => Promise<void>;
   fetchVideoBySlug: (slug: string | undefined) => Promise<IVideo | null>;
+  fetchVideosByUploaderId: (
+    uploaderId: number | undefined
+  ) => Promise<IVideo[]>;
 }
 const useVideoClient = create<IHookVideoClientProps>((set) => ({
   videos: [],
@@ -40,7 +43,7 @@ const useVideoClient = create<IHookVideoClientProps>((set) => ({
       return null;
     }
     try {
-      const response = await axios.get(myApi.url(`videos/item/${slug}`));      
+      const response = await axios.get(myApi.url(`videos/item/${slug}`));
       if (response.status === 200 && response.data.status) {
         return response.data.data;
       }
@@ -48,6 +51,22 @@ const useVideoClient = create<IHookVideoClientProps>((set) => ({
       console.log(error);
     }
     return null;
+  },
+  fetchVideosByUploaderId: async (uploaderId: number | undefined) => {
+    if (!uploaderId) {
+      return [];
+    }
+    try {
+      const response = await axios.get(
+        myApi.url(`videos?uploader_id=${uploaderId}`)
+      );
+      if (response.status === 200 && response.data.status) {
+        return response.data.data;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    return [];
   },
 }));
 export default useVideoClient;

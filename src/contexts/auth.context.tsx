@@ -4,7 +4,6 @@ import useAuth, { IHookAuthProps, ILoginProps } from "../hooks/useAuth.hook";
 import { NavigateFunction } from "react-router-dom";
 
 export const AuthContext = createContext<IHookAuthProps>({
-  isAuthenticated: false,
   isLoggingIn: false,
   isErrorLogIn: false,
   userCurrent: undefined,
@@ -19,6 +18,9 @@ export const AuthContext = createContext<IHookAuthProps>({
     throw new Error("Function not implemented.");
   },
   checkLoginStart: function (): void {
+    throw new Error("Function not implemented.");
+  },
+  register: function (): Promise<void> {
     throw new Error("Function not implemented.");
   },
 });
