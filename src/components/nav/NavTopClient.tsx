@@ -5,6 +5,7 @@ import { ClassValue } from "clsx";
 import { AuthContext } from "../../contexts/auth.context";
 import Heading from "../ui/Heading";
 import { Size } from "../../libs/utils/type.d";
+import { navigation } from "../../roots/router";
 interface INavTopClientProps {
   className?: ClassValue;
   menuMobileOnClick: () => void;
@@ -23,7 +24,14 @@ const NavTopClient: React.FC<INavTopClientProps> = ({
         <button className="" onClick={menuMobileOnClick}>
           <img src={MenuIcon} alt="menu-icon" className="w-7 h-7" />
         </button>
-        <img src={VideoLogo} alt="logo" className="w-11 h-11 rounded-full" />
+        <img
+          src={VideoLogo}
+          alt="logo"
+          className="w-11 h-11 rounded-full cursor-pointer"
+          onClick={() => {
+            navigation("/");
+          }}
+        />
         {userCurrent?.fullName && (
           <Heading value={`Welcome ${userCurrent?.fullName}`} size={Size.LG} />
         )}

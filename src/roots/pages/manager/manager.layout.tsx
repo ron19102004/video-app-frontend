@@ -6,5 +6,4 @@ const ManagerLayout:React.FC = () => {
       <Outlet/>
   )
 }
-
 export default ManagerLayout

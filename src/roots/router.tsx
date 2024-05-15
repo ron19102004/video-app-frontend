@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
 import Error404Page from "./errors/page404.error";
 import {
   HomeAdminPage,
@@ -10,8 +10,11 @@ import {
 import {
   ClientLayout,
   HomePage,
-  MyProfilePage,
-  UserProfilePage,
+  MyProfileLayout,
+  MyProfilePlaylistPage,
+  UserProfileLayout,
+  UserProfilePlaylistPage,
+  UserProfileVideoPage,
   VideoPlayerPage,
   VideosNewPage,
 } from "./pages/client";
@@ -20,6 +23,9 @@ import { LoginFormPage, RegisterFormPage, AuthLayout } from "./auth";
 import { useLocation } from "react-router-dom";
 
 export const useQuery = () => new URLSearchParams(useLocation().search);
+export const navigation = (url: string) => {
+  window.location.href = url;
+};
 
 const router = createBrowserRouter([
   {
@@ -36,17 +42,46 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "video/:uploaderId/:slug",
-        element: <VideoPlayerPage />,
+        path: "video",
+        element: <Outlet />,
+        children: [
+          {
+            path: ":uploaderId/:slug",
+            element: <VideoPlayerPage />,
+          },
+          {
+            path: "new",
+            element: <VideosNewPage />,
+          },
+        ],
       },
-      { path: "videos/new", element: <VideosNewPage /> },
       {
         path: "profile",
-        element: <MyProfilePage />,
+        element: <MyProfileLayout />,
+        children: [
+          {
+            path: "",
+            element: <MyProfilePlaylistPage />,
+          },
+        ],
       },
       {
-        path: "user/:userId",
-        element: <UserProfilePage />,
+        path: "user/:uid",
+        element: <UserProfileLayout />,
+        children: [
+          {
+            path: "",
+            element: <Navigate to={"videos"} replace />,
+          },
+          {
+            path: "videos",
+            element: <UserProfileVideoPage />,
+          },
+          {
+            path: "playlists",
+            element: <UserProfilePlaylistPage />,
+          },
+        ],
       },
     ],
   },
@@ -56,7 +91,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Navigate to={"/manager/home"} />,
+        element: <Navigate to={"home"} replace />,
       },
       {
         path: "home",
@@ -70,7 +105,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Navigate to={"/admin/home"} />,
+        element: <Navigate to={"home"} replace />,
       },
       {
         path: "home",

@@ -21,12 +21,12 @@ const menus: IMenuLinkProps[] = [
     title: "Home",
   },
   {
-    to: "/profile",
+    to: `/profile`,
     icon: UserIcon,
     title: "Profile",
   },
   {
-    to: "/videos/new",
+    to: "/video/new",
     icon: NewIcon,
     title: "New",
   },

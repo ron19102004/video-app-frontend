@@ -9,7 +9,7 @@ export interface IHookVideoClientProps {
   fetchVideos: (pageNumber: number) => Promise<void>;
   fetchVideoBySlug: (slug: string | undefined) => Promise<IVideo | null>;
   fetchVideosByUploaderId: (
-    uploaderId: number | undefined
+    uploaderId: number | string | undefined
   ) => Promise<IVideo[]>;
 }
 const useVideoClient = create<IHookVideoClientProps>((set) => ({
@@ -52,7 +52,7 @@ const useVideoClient = create<IHookVideoClientProps>((set) => ({
     }
     return null;
   },
-  fetchVideosByUploaderId: async (uploaderId: number | undefined) => {
+  fetchVideosByUploaderId: async (uploaderId: number | string | undefined) => {
     if (!uploaderId) {
       return [];
     }

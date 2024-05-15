@@ -24,7 +24,13 @@ export const AuthContext = createContext<IHookAuthProps>({
   register: function (): Promise<void> {
     throw new Error("Function not implemented.");
   },
-  fetchUserConfirmed: ():  Promise<{ isSubscribing: boolean; user: IUser }> => {
+  fetchUserConfirmed: (): Promise<{ isSubscribing: boolean; user: IUser; }> => {
+    throw new Error("Function not implemented.");
+  },
+  subscribe: function (): Promise<boolean> {
+    throw new Error("Function not implemented.");
+  },
+  unsubscribe: function (): Promise<boolean> {
     throw new Error("Function not implemented.");
   },
 });

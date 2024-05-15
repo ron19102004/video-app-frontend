@@ -48,3 +48,13 @@ export interface IVideo {
   country: ICountry;
   uploader: IUser;
 }
+export enum EPrivacy {
+  public = "PUBLIC",
+  private = "PRIVATE",
+}
+export interface IPlaylist {
+  id: number;
+  name: string;
+  image: string;
+  privacy: EPrivacy;
+}

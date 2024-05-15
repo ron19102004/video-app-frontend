@@ -2,12 +2,14 @@ import React from "react";
 import { IVideo } from "../../hooks/type";
 import { ClassValue } from "clsx";
 import { Image } from "../ui";
+import cn from "../../libs/utils/cn";
 
 interface ICardVideoProps {
   video: IVideo;
   className?: ClassValue;
+  imageClassName?:ClassValue
 }
-const CardVideo: React.FC<ICardVideoProps> = ({ video, className }) => {
+const CardVideo: React.FC<ICardVideoProps> = ({ video, className, imageClassName }) => {
   return (
     <a
       href={`/video/${video.uploader.id}/${video.slug}`}
@@ -17,7 +19,7 @@ const CardVideo: React.FC<ICardVideoProps> = ({ video, className }) => {
         <Image
           src={video.image}
           alt={video.name}
-          className="min-w-full h-48 md:h-56 object-cover rounded-xl"
+          className={cn("min-w-full h-44 md:h-48 lg:h-52 object-cover rounded-xl",imageClassName)}
         />
       </div>
       <div className="flex flex-row justify-start items-start">

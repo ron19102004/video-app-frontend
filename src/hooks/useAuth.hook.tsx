@@ -6,6 +6,8 @@ import axios from "axios";
 import { myApi } from "../libs/utils/api.utils";
 import Cookies from "js-cookie";
 import { NavigateFunction } from "react-router-dom";
+import { navigation } from "../roots/router";
+import toast, { EToastType } from "../libs/utils/toast.util";
 
 export interface ILoginProps {
   username: string;
@@ -30,6 +32,8 @@ export interface IHookAuthProps {
   fetchUserConfirmed: (
     userId: number | string | undefined
   ) => Promise<{ isSubscribing: boolean; user: IUser | null }>;
+  subscribe: (subscriberId: number | undefined) => Promise<boolean>;
+  unsubscribe: (unSubscriberId: number | undefined) => Promise<boolean>;
 }
 
 const useAuth = create<IHookAuthProps>((set) => ({
@@ -80,6 +84,7 @@ const useAuth = create<IHookAuthProps>((set) => ({
   },
   checkLoginStart: () => {
     try {
+      set((state) => ({ ...state, isCheckingLogin: true }));
       const accessToken = Cookies.get("access-token");
       if (accessToken) {
         axios
@@ -99,14 +104,17 @@ const useAuth = create<IHookAuthProps>((set) => ({
                 isAuthenticated: true,
                 userCurrent: data.user,
               }));
+              set((state) => ({ ...state, isCheckingLogin: false }));
             } else Cookies.remove("access-token");
           })
           .catch((err) => {
             console.log(err);
+            set((state) => ({ ...state, isCheckingLogin: false }));
           });
       }
     } catch (error) {
       console.log(error);
+      set((state) => ({ ...state, isCheckingLogin: false }));
     }
   },
   register: async (data: IRegisterProps, navigate: NavigateFunction) => {
@@ -153,6 +161,69 @@ const useAuth = create<IHookAuthProps>((set) => ({
       console.log(error);
     }
     return null;
+  },
+  subscribe: async (subscriberId: number | undefined) => {
+    if (subscriberId === undefined) return false;
+    try {
+      const token = Cookies.get("access-token");
+      if (!token) {
+        navigation("/auth/login");
+        return false;
+      }
+      const response = await axios.post(
+        myApi.url(`users/subscribe?id=${subscriberId}`),
+        null,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        if (response.data.status)
+          toast({
+            message: "Subscribe successfully!",
+            type: EToastType.success,
+          });
+        else toast({ message: "Subscribe failed!", type: EToastType.error });
+        return response.data.status;
+      }
+    } catch (error) {
+      console.log(error);
+      toast({ message: "Subscribe failed!", type: EToastType.error });
+    }
+    return false;
+  },
+  unsubscribe: async (unSubscriberId: number | undefined) => {
+    if (unSubscriberId === undefined) return false;
+    try {
+      const token = Cookies.get("access-token");
+      if (!token) {
+        navigation("/auth/login");
+        return false;
+      }
+      const response = await axios.delete(
+        myApi.url(`users/unsubscribe?id=${unSubscriberId}`),
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        if (response.data.status)
+          toast({
+            message: "Unsubscribe successfully!",
+            type: EToastType.success,
+          });
+        else toast({ message: "Unsubscribe failed!", type: EToastType.error });
+        return response.data.status;
+      }
+    } catch (error) {
+      console.log(error);
+      toast({ message: "Subscribe failed!", type: EToastType.error });
+    }
+    return false;
   },
 }));
 export default useAuth;

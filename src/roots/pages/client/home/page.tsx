@@ -15,7 +15,7 @@ const HomePage: React.FC = () => {
         <ForEach
           list={videos}
           render={(_index: number, item: IVideo) => {
-            return <CardVideo video={item} />;
+            return <CardVideo video={item} imageClassName="lg:h-72" />;
           }}
         />
       </ul>
