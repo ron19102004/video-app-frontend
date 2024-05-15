@@ -25,8 +25,11 @@ export interface IHookAuthProps {
   accessToken: string | undefined;
   login: (data: ILoginProps, navigate: NavigateFunction) => Promise<void>;
   register: (data: IRegisterProps, navigate: NavigateFunction) => Promise<void>;
-  logout: (navigate: NavigateFunction) => void;
+  logout: () => void;
   checkLoginStart: () => void;
+  fetchUserConfirmed: (
+    userId: number | string | undefined
+  ) => Promise<{ isSubscribing: boolean; user: IUser | null }>;
 }
 
 const useAuth = create<IHookAuthProps>((set) => ({
@@ -63,7 +66,7 @@ const useAuth = create<IHookAuthProps>((set) => ({
       set((state) => ({ ...state, isErrorLogIn: true }));
     }
   },
-  logout: (navigate: NavigateFunction) => {
+  logout: () => {
     set((state) => ({
       ...state,
       isAuthenticated: false,
@@ -73,7 +76,7 @@ const useAuth = create<IHookAuthProps>((set) => ({
       isLoggingIn: false,
     }));
     Cookies.remove("access-token");
-    navigate("/home");
+    window.location.href = "/";
   },
   checkLoginStart: () => {
     try {
@@ -96,7 +99,7 @@ const useAuth = create<IHookAuthProps>((set) => ({
                 isAuthenticated: true,
                 userCurrent: data.user,
               }));
-            }
+            } else Cookies.remove("access-token");
           })
           .catch((err) => {
             console.log(err);
@@ -118,6 +121,38 @@ const useAuth = create<IHookAuthProps>((set) => ({
     } catch (error) {
       console.log(error);
     }
+  },
+  fetchUserConfirmed: async (userId: number | string | undefined) => {
+    if (userId === undefined) return null;
+    const token = Cookies.get("access-token");
+    try {
+      const response = await axios.get(
+        myApi.url(
+          token === undefined
+            ? `users/info-confirmed?id=${userId}`
+            : `users/loggedIn/info-confirmed?id=${userId}`
+        ),
+        token === undefined
+          ? {}
+          : {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+      );
+      if (response.status === 200) {
+        if (token !== undefined) {
+          return response.data.data;
+        }
+        return {
+          isSubscribing: false,
+          user: response.data.data,
+        };
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    return null;
   },
 }));
 export default useAuth;

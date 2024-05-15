@@ -2,6 +2,7 @@
 import { createContext } from "react";
 import useAuth, { IHookAuthProps, ILoginProps } from "../hooks/useAuth.hook";
 import { NavigateFunction } from "react-router-dom";
+import { IUser } from "../hooks/type";
 
 export const AuthContext = createContext<IHookAuthProps>({
   isLoggingIn: false,
@@ -21,6 +22,9 @@ export const AuthContext = createContext<IHookAuthProps>({
     throw new Error("Function not implemented.");
   },
   register: function (): Promise<void> {
+    throw new Error("Function not implemented.");
+  },
+  fetchUserConfirmed: ():  Promise<{ isSubscribing: boolean; user: IUser }> => {
     throw new Error("Function not implemented.");
   },
 });

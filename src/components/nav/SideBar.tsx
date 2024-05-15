@@ -1,19 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useContext, useState } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import ForEach from "../../libs/utils/foreach";
-import Menu, { IMenuProps } from "./Menu";
+import MenuLink, { IMenuLinkProps } from "./MenuLink";
 import {
+  AdminIcon,
   HomeIcon,
+  LogoutIcon,
   ManagerIcon,
-  MenuIcon,
   NewIcon,
   UserIcon,
 } from "../../assets";
 import cn from "../../libs/utils/cn";
-import Heading from "../ui/Heading";
 import { AuthContext } from "../../contexts/auth.context";
-
-const menus: IMenuProps[] = [
+import MenuButton from "./MenuButton";
+import { ERole } from "../../hooks/type";
+const menus: IMenuLinkProps[] = [
   {
     to: "/home",
     icon: HomeIcon,
@@ -41,7 +42,7 @@ const SideBar: React.FC<ISideBarProps> = ({
   isOpen,
   changeOpen,
 }) => {
-  const { userCurrent } = useContext(AuthContext);
+  const { userCurrent, logout } = useContext(AuthContext);
   return (
     <section
       className={cn(
@@ -56,9 +57,9 @@ const SideBar: React.FC<ISideBarProps> = ({
       <ul className="flex flex-col space-y-4 transition-all pt-16 lg:pt-0">
         <ForEach
           list={menus}
-          render={(_index: number, item: IMenuProps) => {
+          render={(_index: number, item: IMenuLinkProps) => {
             return (
-              <Menu
+              <MenuLink
                 to={item.to}
                 icon={item.icon}
                 title={item.title}
@@ -68,17 +69,50 @@ const SideBar: React.FC<ISideBarProps> = ({
             );
           }}
         />
-        {userCurrent?.confirmed && (
-          <Menu
-            to={"/manager"}
-            icon={ManagerIcon}
-            title={"Manager Studio"}
-            isOpen={isOpen}
-            onClick={changeOpen}
-          />
+      </ul>
+      <hr className="my-3" />
+      <ul className="flex flex-col space-y-4 transition-all">
+        {userCurrent !== undefined ? (
+          <Fragment>
+            {userCurrent?.confirmed && (
+              <MenuLink
+                to={"/manager"}
+                icon={ManagerIcon}
+                title={"Manager Studio"}
+                isOpen={isOpen}
+                onClick={changeOpen}
+              />
+            )}
+            {userCurrent?.role === ERole.admin && (
+              <MenuLink
+                to={"/admin"}
+                icon={AdminIcon}
+                title={"Admin Management"}
+                isOpen={isOpen}
+                onClick={changeOpen}
+              />
+            )}
+            <MenuButton
+              icon={LogoutIcon}
+              onClick={logout}
+              title="Log out"
+              isOpen={isOpen}
+              iconClassName="rotate-180"
+            />
+          </Fragment>
+        ) : (
+          <Fragment>
+            <MenuButton
+              icon={LogoutIcon}
+              onClick={() => {
+                window.location.href = "/auth/login";
+              }}
+              title="Sign in"
+              isOpen={isOpen}
+            />
+          </Fragment>
         )}
       </ul>
-      <hr className="mt-3" />
     </section>
   );
 };

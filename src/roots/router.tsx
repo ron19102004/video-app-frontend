@@ -1,15 +1,25 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import Error404Page from "./errors/page404.error";
-import { HomeAdminPage, ReportAdminPage, AdminLayout } from "./pages/admin";
+import {
+  HomeAdminPage,
+  ReportAdminPage,
+  AdminLayout,
+  CategoryAdminPage,
+  CountryAdminPage,
+} from "./pages/admin";
 import {
   ClientLayout,
   HomePage,
-  ProfilePage,
+  MyProfilePage,
+  UserProfilePage,
   VideoPlayerPage,
   VideosNewPage,
 } from "./pages/client";
 import { HomeManagerPage, ManagerLayout } from "./pages/manager";
 import { LoginFormPage, RegisterFormPage, AuthLayout } from "./auth";
+import { useLocation } from "react-router-dom";
+
+export const useQuery = () => new URLSearchParams(useLocation().search);
 
 const router = createBrowserRouter([
   {
@@ -32,7 +42,11 @@ const router = createBrowserRouter([
       { path: "videos/new", element: <VideosNewPage /> },
       {
         path: "profile",
-        element: <ProfilePage />,
+        element: <MyProfilePage />,
+      },
+      {
+        path: "user/:userId",
+        element: <UserProfilePage />,
       },
     ],
   },
@@ -65,6 +79,14 @@ const router = createBrowserRouter([
       {
         path: "reports",
         element: <ReportAdminPage />,
+      },
+      {
+        path: "category",
+        element: <CategoryAdminPage />,
+      },
+      {
+        path: "country",
+        element: <CountryAdminPage />,
       },
     ],
   },

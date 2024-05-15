@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
 import cn from "../../libs/utils/cn";
 import { Size } from "../../libs/utils/type.d";
@@ -6,14 +7,19 @@ interface IHeadingProps {
   value: string | undefined;
   className?: ClassValue;
   size?: Size;
+  onClick?: (value: string | undefined) => void;
 }
 const Heading: React.FC<IHeadingProps> = ({
   value,
   className,
   size = Size.MD,
+  onClick = (_value: string | undefined) => {},
 }) => {
   return (
     <h1
+      onChange={() => {
+        onClick(value);
+      }}
       className={cn(
         "font-bold",
         {

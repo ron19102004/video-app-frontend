@@ -5,7 +5,7 @@ import { AuthContext } from "../../contexts/auth.context";
 const AuthLayout: React.FC = () => {
   const { userCurrent } = useContext(AuthContext);
   useEffect(() => {
-    if (userCurrent === undefined) {
+    if (userCurrent !== undefined) {
       window.location.href = "/";
     }
   }, [userCurrent]);

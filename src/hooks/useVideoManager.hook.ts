@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { create } from "zustand";
 import { IVideo } from "./type";
 import axios from "axios";
@@ -7,7 +8,7 @@ interface IHookVideoManagerProps {
   videos: Array<IVideo>;
   fetchVideo: () => void;
 }
-const useVideoManager = create<IHookVideoManagerProps>((set) => ({
+const useVideoManager = create<IHookVideoManagerProps>((_set) => ({
   videos: [],
   fetchVideo: () => {
     axios

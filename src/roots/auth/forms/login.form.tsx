@@ -23,7 +23,13 @@ const LoginFormPage: React.FC = () => {
     <Fragment>
       <div className="basis-1/2">
         <div className="">
-          <Image src={VideoLogo} className="w-20 h-20 rounded-full" />
+          <Image
+            src={VideoLogo}
+            className="w-20 h-20 rounded-full"
+            onClick={() => {
+              navigate("/");
+            }}
+          />
           <Heading value="Sign In to Video" size={Size.XXL} className="pt-4" />
           <p className="pt-4">Use your Video Account</p>
         </div>
@@ -73,7 +79,12 @@ const LoginFormPage: React.FC = () => {
         <div>
           <p>
             <span className="text-slate-400">You don't have an account ? </span>
-            <a href="/auth/register" className="hover:text-primary-content-color">Register here </a>
+            <a
+              href="/auth/register"
+              className="hover:text-primary-content-color"
+            >
+              Register here{" "}
+            </a>
           </p>
         </div>
       </form>

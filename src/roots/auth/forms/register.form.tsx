@@ -62,9 +62,15 @@ const RegisterFormPage: React.FC = () => {
     <Fragment>
       <div className="basis-1/2">
         <div className="">
-          <Image src={VideoLogo} className="w-20 h-20 rounded-full" />
+          <Image
+            src={VideoLogo}
+            className="w-20 h-20 rounded-full"
+            onClick={() => {
+              navigate("/");
+            }}
+          />
           <Heading
-            value="Create a Google Account"
+            value="Create a Video Account"
             size={Size.XXL}
             className="pt-4"
           />

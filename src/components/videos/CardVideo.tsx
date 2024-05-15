@@ -1,6 +1,7 @@
 import React from "react";
 import { IVideo } from "../../hooks/type";
 import { ClassValue } from "clsx";
+import { Image } from "../ui";
 
 interface ICardVideoProps {
   video: IVideo;
@@ -13,7 +14,7 @@ const CardVideo: React.FC<ICardVideoProps> = ({ video, className }) => {
       className={`${className} min-w-full cursor-pointer`}
     >
       <div className="rounded-xl pb-2">
-        <img
+        <Image
           src={video.image}
           alt={video.name}
           className="min-w-full h-48 md:h-56 object-cover rounded-xl"
@@ -21,7 +22,7 @@ const CardVideo: React.FC<ICardVideoProps> = ({ video, className }) => {
       </div>
       <div className="flex flex-row justify-start items-start">
         <div className="w-12 flex flex-col justify-center items-center">
-          <img
+          <Image
             src={video.uploader.imageURL}
             alt={video.uploader.fullName}
             className="w-10 h-10 rounded-full object-cover"

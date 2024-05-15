@@ -3,22 +3,24 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import cn from "../../libs/utils/cn";
 
-export interface IMenuProps {
+export interface IMenuLinkProps {
   className?: ClassValue;
   to: string;
   icon: string;
   title: string;
   isOpen?: boolean;
   onClick?: () => void;
+  iconClassName?: ClassValue;
 }
 
-const Menu: React.FC<IMenuProps> = ({
+const MenuLink: React.FC<IMenuLinkProps> = ({
   className,
   to,
   title,
   icon,
   isOpen,
   onClick,
+  iconClassName,
 }) => {
   return (
     <NavLink
@@ -40,11 +42,16 @@ const Menu: React.FC<IMenuProps> = ({
           "flex-col justify-center items-center ": !isOpen,
         })}
       >
-        <img src={icon} alt={icon} className="w-7 h-7" />
-        <h1 className="">{title}</h1>
+        <img src={icon} alt={icon} className={cn("w-7 h-7", iconClassName)} />
+        <h1
+          className={cn("text-ellipsis line-clamp-1", {
+            "max-w-20": !isOpen,
+          })}
+        >
+          {title}
+        </h1>
       </div>
     </NavLink>
   );
 };
-
-export default Menu;
+export default MenuLink;
