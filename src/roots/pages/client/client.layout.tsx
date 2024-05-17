@@ -26,7 +26,7 @@ const ClientLayout: React.FC = () => {
             setIsOpenSideBar(false);
           }}
         />
-        <main className="flex-1 px-4 max-h-screen overflow-auto">
+        <main className="client-layout-main flex-1 px-4 max-h-screen overflow-y-auto overflow-x-hidden">
           <Outlet />
         </main>
       </div>

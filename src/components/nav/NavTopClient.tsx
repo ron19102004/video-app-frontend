@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useContext, useState } from "react";
 import { MenuIcon, VideoLogo } from "../../assets";
 import { SearchBar } from "../ui";
@@ -6,6 +7,7 @@ import { AuthContext } from "../../contexts/auth.context";
 import Heading from "../ui/Heading";
 import { Size } from "../../libs/utils/type.d";
 import { navigation } from "../../roots/router";
+import { useNavigate } from "react-router-dom";
 interface INavTopClientProps {
   className?: ClassValue;
   menuMobileOnClick: () => void;
@@ -15,7 +17,11 @@ const NavTopClient: React.FC<INavTopClientProps> = ({
   menuMobileOnClick,
 }) => {
   const { userCurrent } = useContext(AuthContext);
-  const [searchValue, setSearchValue] = useState<string>("");
+  const navigate = useNavigate();
+  const onSearch = (value: string) => {
+    // navigate(`/video/search?name=${value.split(" ").join("-")}`);
+    window.location.href = `/video/search?name=${value.split(" ").join("-")}`
+  };
   return (
     <nav
       className={`flex items-center justify-around md:justify-between md:px-8 ${className}`}
@@ -39,14 +45,7 @@ const NavTopClient: React.FC<INavTopClientProps> = ({
       <button className="block lg:hidden" onClick={menuMobileOnClick}>
         <img src={MenuIcon} alt="menu-icon" className="w-7 h-7" />
       </button>
-      <SearchBar
-        placeholder="Search: florida"
-        onChange={function (e: React.ChangeEvent<HTMLInputElement>): void {
-          setSearchValue(e.target.value);
-        }}
-        value={searchValue}
-        onSearch={function (): void {}}
-      />
+      <SearchBar placeholder="Search: florida" onSearch={onSearch} />
     </nav>
   );
 };

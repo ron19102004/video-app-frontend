@@ -1,42 +1,29 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { create } from "zustand";
 import { IVideo } from "./type";
 import axios from "axios";
 import { myApi } from "../libs/utils/api.utils";
 
 export interface IHookVideoClientProps {
-  videos: Array<IVideo>;
   isFetching: boolean;
-  fetchVideos: (pageNumber: number) => Promise<void>;
+  fetchVideos: (pageNumber: number) => Promise<Array<IVideo>>;
   fetchVideoBySlug: (slug: string | undefined) => Promise<IVideo | null>;
   fetchVideosByUploaderId: (
     uploaderId: number | string | undefined
   ) => Promise<IVideo[]>;
 }
-const useVideoClient = create<IHookVideoClientProps>((set) => ({
-  videos: [],
+const useVideoClient = create<IHookVideoClientProps>((_set) => ({
   isFetching: false,
   fetchVideos: async (pageNumber: number = 0) => {
-    set((state) => ({
-      ...state,
-      isFetching: true,
-    }));
     try {
       const response = await axios.get(myApi.url(`videos?page=${pageNumber}`));
       if (response.status === 200 && response.data.status) {
-        const data = response.data.data;
-        set((state) => ({
-          ...state,
-          videos: data,
-        }));
+        return response.data.data;
       }
     } catch (error) {
       console.log(error);
-    } finally {
-      set((state) => ({
-        ...state,
-        isFetching: false,
-      }));
     }
+    return [];
   },
   fetchVideoBySlug: async (slug: string | undefined) => {
     if (!slug) {

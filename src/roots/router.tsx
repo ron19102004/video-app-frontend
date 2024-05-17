@@ -12,6 +12,7 @@ import {
   HomePage,
   MyProfileLayout,
   MyProfilePlaylistPage,
+  SearchResultPage,
   UserProfileLayout,
   UserProfilePlaylistPage,
   UserProfileVideoPage,
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
           {
             path: "new",
             element: <VideosNewPage />,
+          },
+          {
+            path: "search",
+            element: <SearchResultPage />,
           },
         ],
       },

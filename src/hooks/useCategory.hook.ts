@@ -16,9 +16,9 @@ interface IHookCategoryProps {
 const useCategory = create<IHookCategoryProps>((_set) => ({
   fetchCategories: async () => {
     try {
-      const response = await axios.get(myApi.url("categories"));
-      if (response.status === 200 && response.data.status) {
-        return response.data.data;
+      const response = await axios.get(myApi.url("categories"));      
+      if (response.status === 200) {
+        return response.data;
       }
     } catch (error) {
       console.log(error);

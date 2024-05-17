@@ -15,8 +15,8 @@ const useCountry = create<IHookCountryProps>((_set) => ({
   fetchCountries: async () => {
     try {
       const country = await axios.get("countries");
-      if (country.status === 200 && country.data.status) {
-        return country.data.data;
+      if (country.status === 200) {
+        return country.data;
       }
     } catch (error) {
       console.log(error);

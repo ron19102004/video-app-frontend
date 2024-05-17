@@ -7,6 +7,7 @@ import UserProfileLayout from './profile/user-profile.layout';
 import UserProfilePlaylistPage from './profile/UserProfilePlaylistPage';
 import MyProfileLayout from './profile/personal/my-profile.layout';
 import MyProfilePlaylistPage from './profile/personal/MyProfilePlaylistPage';
+import SearchResultPage from './search/page';
 export {
     ClientLayout,
     HomePage,
@@ -16,5 +17,6 @@ export {
     UserProfileLayout,
     UserProfilePlaylistPage,
     MyProfileLayout,
-    MyProfilePlaylistPage
+    MyProfilePlaylistPage,
+    SearchResultPage
 }

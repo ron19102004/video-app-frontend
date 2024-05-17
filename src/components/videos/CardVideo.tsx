@@ -3,23 +3,31 @@ import { IVideo } from "../../hooks/type";
 import { ClassValue } from "clsx";
 import { Image } from "../ui";
 import cn from "../../libs/utils/cn";
+import { Link } from "react-router-dom";
 
 interface ICardVideoProps {
   video: IVideo;
   className?: ClassValue;
-  imageClassName?:ClassValue
+  imageClassName?: ClassValue;
 }
-const CardVideo: React.FC<ICardVideoProps> = ({ video, className, imageClassName }) => {
+const CardVideo: React.FC<ICardVideoProps> = ({
+  video,
+  className,
+  imageClassName,
+}) => {
   return (
-    <a
-      href={`/video/${video.uploader.id}/${video.slug}`}
-      className={`${className} min-w-full cursor-pointer`}
+    <Link
+      to={`/video/${video.uploader.id}/${video.slug}`}
+      className={` w-full cursor-pointer ${className}`}
     >
       <div className="rounded-xl pb-2">
         <Image
           src={video.image}
           alt={video.name}
-          className={cn("min-w-full h-44 md:h-48 lg:h-52 object-cover rounded-xl",imageClassName)}
+          className={cn(
+            "w-full h-44 md:h-48 lg:h-40 object-cover rounded-xl",
+            imageClassName
+          )}
         />
       </div>
       <div className="flex flex-row justify-start items-start">
@@ -37,7 +45,7 @@ const CardVideo: React.FC<ICardVideoProps> = ({ video, className, imageClassName
           </h3>
         </div>
       </div>
-    </a>
+    </Link>
   );
 };
 
