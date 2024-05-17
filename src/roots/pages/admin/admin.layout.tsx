@@ -5,7 +5,7 @@ import { ERole } from "../../../hooks/type";
 
 const AdminLayout: React.FC = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, userCurrent } = useContext(AuthContext);
+  const { userCurrent , isAuthenticated} = useContext(AuthContext);
   if (!isAuthenticated) {
     navigate("/auth/login", { replace: true });
     return;

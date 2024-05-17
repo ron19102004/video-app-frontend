@@ -7,7 +7,7 @@ class Api {
     }
 }
 const myApi = new Api("http://49.236.210.169:80/");
-// const myApi = new Api("http://localhost:8080");
+// const myApi = new Api("https://hairsalondanangtss.io.vn/");
 export {
     myApi
 }

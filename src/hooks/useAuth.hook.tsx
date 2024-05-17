@@ -21,6 +21,7 @@ export interface IRegisterProps {
   phone: string | undefined;
 }
 export interface IHookAuthProps {
+  isAuthenticated: boolean;
   isLoggingIn: boolean;
   isErrorLogIn: boolean;
   userCurrent: IUser | undefined;
@@ -37,6 +38,7 @@ export interface IHookAuthProps {
 }
 
 const useAuth = create<IHookAuthProps>((set) => ({
+  isAuthenticated: false,
   isLoggingIn: false,
   isErrorLogIn: false,
   userCurrent: undefined,
@@ -60,6 +62,7 @@ const useAuth = create<IHookAuthProps>((set) => ({
           isAuthenticated: true,
           isErrorLogIn: false,
         }));
+        Cookies.set("isAuthentication", "true", { expires: 4 });
         Cookies.set("access-token", data_res.token, { expires: 4 });
         navigate("/");
       } else {
@@ -80,9 +83,14 @@ const useAuth = create<IHookAuthProps>((set) => ({
       isLoggingIn: false,
     }));
     Cookies.remove("access-token");
+    Cookies.remove("isAuthentication");
     window.location.href = "/";
   },
   checkLoginStart: () => {
+    const isAuth = Cookies.get("isAuthentication");
+    if (isAuth && isAuth === "true") {
+      set((state) => ({ ...state, isAuthenticated: true }));
+    }
     try {
       set((state) => ({ ...state, isCheckingLogin: true }));
       const accessToken = Cookies.get("access-token");
@@ -105,7 +113,11 @@ const useAuth = create<IHookAuthProps>((set) => ({
                 userCurrent: data.user,
               }));
               set((state) => ({ ...state, isCheckingLogin: false }));
-            } else Cookies.remove("access-token");
+            } else {
+              Cookies.remove("access-token");
+              Cookies.remove("isAuthentication");
+              set((state) => ({ ...state, isAuthenticated: false }));
+            }
           })
           .catch((err) => {
             console.log(err);

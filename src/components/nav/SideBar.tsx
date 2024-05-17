@@ -85,7 +85,7 @@ const SideBar: React.FC<ISideBarProps> = ({
             )}
             {userCurrent?.role === ERole.admin && (
               <MenuLink
-                to={"/admin"}
+                to={"/admin/category"}
                 icon={AdminIcon}
                 title={"Admin Management"}
                 isOpen={isOpen}

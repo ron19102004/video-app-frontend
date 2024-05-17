@@ -33,6 +33,7 @@ export const AuthContext = createContext<IHookAuthProps>({
   unsubscribe: function (): Promise<boolean> {
     throw new Error("Function not implemented.");
   },
+  isAuthenticated: false
 });
 
 const AuthProvider = ({ children }) => {
