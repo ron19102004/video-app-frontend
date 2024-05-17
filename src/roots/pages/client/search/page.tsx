@@ -14,8 +14,9 @@ const SearchResultPage: React.FC = () => {
   const [videos, setVideos] = useState<IVideo[]>([]);
   const init = async () => {
     const name = (query.get("name") ?? "").split("-").join(" ");
+    const category_id = parseInt(query.get("category_id") || "0");
     setQueryValue(name);
-    const videos = await search({ name: name });
+    const videos = await search({ name: name, category_id: category_id });
     setVideos(videos);
   };
   useEffect(() => {

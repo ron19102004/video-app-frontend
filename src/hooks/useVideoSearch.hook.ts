@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { create } from "zustand";
 import { IVideo } from "./type";
 import axios from "axios";
@@ -11,7 +12,7 @@ interface ISearchProps {
 interface IHookVideoSearchProps {
   search: (data: ISearchProps) => Promise<IVideo[]>;
 }
-const useVideoSearch = create<IHookVideoSearchProps>((set) => ({
+const useVideoSearch = create<IHookVideoSearchProps>((_set) => ({
   result: [],
   search: async (data: ISearchProps) => {
     try {

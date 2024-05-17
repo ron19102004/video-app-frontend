@@ -29,7 +29,7 @@ const HomePage: React.FC = () => {
           render={(_index: number, item: ICategory) => {
             return (
               <Link
-                to={`/`}
+                to={`/video/search?category_id=${item.id}`}
                 className={cn("bg-bg-container-color px-4 py-1 rounded-xl")}
               >
                 {item.name}
