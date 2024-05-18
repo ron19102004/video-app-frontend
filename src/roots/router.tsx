@@ -10,8 +10,10 @@ import {
 import {
   ClientLayout,
   HomePage,
+  MyProfileInfoPage,
   MyProfileLayout,
   MyProfilePlaylistPage,
+  MyProfileVideoPage,
   SearchResultPage,
   UserProfileLayout,
   UserProfilePlaylistPage,
@@ -19,7 +21,11 @@ import {
   VideoPlayerPage,
   VideosNewPage,
 } from "./pages/client";
-import { HomeManagerPage, ManagerLayout } from "./pages/manager";
+import {
+  HomeManagerPage,
+  ManagerLayout,
+  VideoAdminPage,
+} from "./pages/manager";
 import { LoginFormPage, RegisterFormPage, AuthLayout } from "./auth";
 import { useLocation } from "react-router-dom";
 
@@ -66,7 +72,19 @@ const router = createBrowserRouter([
         children: [
           {
             path: "",
+            element: <Navigate to={"playlists"} replace />,
+          },
+          {
+            path: "playlists",
             element: <MyProfilePlaylistPage />,
+          },
+          {
+            path: "videos",
+            element: <MyProfileVideoPage />,
+          },
+          {
+            path: "info",
+            element: <MyProfileInfoPage />,
           },
         ],
       },
@@ -101,6 +119,10 @@ const router = createBrowserRouter([
       {
         path: "home",
         element: <HomeManagerPage />,
+      },
+      {
+        path: "videos",
+        element: <VideoAdminPage />,
       },
     ],
   },

@@ -9,6 +9,7 @@ import {
   ManagerIcon,
   NewIcon,
   UserIcon,
+  UserIcon1,
 } from "../../assets";
 import cn from "../../libs/utils/cn";
 import { AuthContext } from "../../contexts/auth.context";
@@ -54,7 +55,7 @@ const SideBar: React.FC<ISideBarProps> = ({
         className
       )}
     >
-      <ul className="flex flex-col space-y-4 transition-all pt-16 lg:pt-0">
+      <ul className="flex flex-col space-y-4 transition-all pt-16">
         <ForEach
           list={menus}
           render={(_index: number, item: IMenuLinkProps) => {
@@ -97,13 +98,12 @@ const SideBar: React.FC<ISideBarProps> = ({
               onClick={logout}
               title="Log out"
               isOpen={isOpen}
-              iconClassName="rotate-180"
             />
           </Fragment>
         ) : (
           <Fragment>
             <MenuButton
-              icon={LogoutIcon}
+              icon={UserIcon1}
               onClick={() => {
                 window.location.href = "/auth/login";
               }}

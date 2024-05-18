@@ -1,17 +1,28 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { IVideo } from "../../../../hooks/type";
+import usePlaylist from "../../../../hooks/usePlaylist.hook";
+import { IPlaylist, IVideo } from "../../../../hooks/type";
 import useVideoClient from "../../../../hooks/useVideoClient.hook";
 import ForEach from "../../../../libs/utils/foreach";
-import { CardVideo } from "../../../../components/videos";
+import PlaylistContainer from "../../../../components/playlist/PlaylistContainer";
 
 const UserProfilePlaylistPage: React.FC = () => {
   const { uid } = useParams();
-  const { fetchVideosByUploaderId } = useVideoClient();
-  const [videos, setVideos] = useState<IVideo[]>([]);
+  const { fetchUserConfirmedPlaylist } = usePlaylist();
+  const { fetchVideosByPublicPlaylistId } = useVideoClient();
+  const [playlistsAndVideos, setPlaylistsAndVideos] = useState<
+    { playlist: IPlaylist; videos: IVideo[] }[]
+  >([]);
   const init = async () => {
-    const videosFetch = await fetchVideosByUploaderId(uid);
-    setVideos(videosFetch);
+    const playlists = await fetchUserConfirmedPlaylist(uid);
+    const playlistAndVideoPromise = playlists.map(
+      async (playlist: IPlaylist) => {
+        const videos = await fetchVideosByPublicPlaylistId(playlist.id);
+        return { playlist, videos };
+      }
+    );
+    const playlistAndVideos = await Promise.all(playlistAndVideoPromise);
+    setPlaylistsAndVideos(playlistAndVideos);
   };
   useEffect(() => {
     if (uid !== undefined) {
@@ -19,16 +30,28 @@ const UserProfilePlaylistPage: React.FC = () => {
     }
   }, [uid]);
   return (
-    <Fragment>
-      <ul className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3">
+    <div>
+      
+      <ul className="space-y-3">
         <ForEach
-          list={videos}
-          render={(_index: number, item: IVideo) => {
-            return <CardVideo video={item} />;
+          list={playlistsAndVideos}
+          render={(
+            _index: number,
+            item: { playlist: IPlaylist; videos: IVideo[] }
+          ) => {
+            return (
+              <Fragment>
+                <PlaylistContainer
+                  playlist={item.playlist}
+                  videos={item.videos}
+                />
+                <hr className="" />
+              </Fragment>
+            );
           }}
         />
       </ul>
-    </Fragment>
+    </div>
   );
 };
 

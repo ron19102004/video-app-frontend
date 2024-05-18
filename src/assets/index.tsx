@@ -5,9 +5,11 @@ import HomeIcon from "./home_icon.png"
 import UserIcon from "./account_icon.png"
 import NewIcon from "./newIcon.png"
 import ManagerIcon from "./managerIcon.png"
-import LogoutIcon from "./logoutIcon.png"
+import LogoutIcon from "./logout_icon.png"
 import AdminIcon from "./adminIcon.png"
 import ConfirmedIcon from "./confirmed.png"
+import UserIcon1 from "./user_icon1.png"
+import VideoIcon from "./videoIcon.png"
 export {
     VideoLogo,
     SearchIcon,
@@ -18,5 +20,7 @@ export {
     ManagerIcon,
     LogoutIcon,
     AdminIcon,
-    ConfirmedIcon
+    ConfirmedIcon,
+    UserIcon1,
+    VideoIcon
 }

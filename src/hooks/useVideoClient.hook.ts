@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { create } from "zustand";
 import { IVideo } from "./type";
@@ -11,6 +12,9 @@ export interface IHookVideoClientProps {
   fetchVideosByUploaderId: (
     uploaderId: number | string | undefined
   ) => Promise<IVideo[]>;
+  fetchVideosByPublicPlaylistId: (id: number | undefined) => Promise<IVideo[]>;
+  fetchMyVideoByPlaylistId: (playlistId: number) => Promise<IVideo[]>;
+  fetchMyVideos: () => Promise<IVideo[]>;
 }
 const useVideoClient = create<IHookVideoClientProps>((_set) => ({
   isFetching: false,
@@ -47,6 +51,57 @@ const useVideoClient = create<IHookVideoClientProps>((_set) => ({
       const response = await axios.get(
         myApi.url(`videos?uploader_id=${uploaderId}`)
       );
+      if (response.status === 200 && response.data.status) {
+        return response.data.data;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    return [];
+  },
+  fetchVideosByPublicPlaylistId: async (id: number | undefined) => {
+    if (!id) {
+      return [];
+    }
+    try {
+      const response = await axios.get(
+        myApi.url(`playlists/public/videos?playlistId=${id}`)
+      );
+      if (response.status === 200 && response.data.status) {
+        return response.data.data;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    return [];
+  },
+  fetchMyVideoByPlaylistId: async (playlistId: number) => {
+    try {
+      const token = Cookies.get("access-token");
+      const response = await axios.get(
+        myApi.url(`playlists/videos?playlistId=${playlistId}`),
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.status === 200 && response.data.status) {
+        return response.data.data;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    return [];
+  },
+  fetchMyVideos: async () => {
+    try {
+      const token = Cookies.get("access-token");
+      const response = await axios.get(myApi.url(`videos/my-videos`), {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (response.status === 200 && response.data.status) {
         return response.data.data;
       }

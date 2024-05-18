@@ -4,6 +4,7 @@ import { ICountry } from "./type";
 import axios from "axios";
 import toast, { EToastType } from "../libs/utils/toast.util";
 import Cookies from "js-cookie";
+import { myApi } from "../libs/utils/api.utils";
 
 interface IHookCountryProps {
   fetchCountries: () => Promise<ICountry[]>;
@@ -14,7 +15,7 @@ interface IHookCountryProps {
 const useCountry = create<IHookCountryProps>((_set) => ({
   fetchCountries: async () => {
     try {
-      const country = await axios.get("countries");
+      const country = await axios.get(myApi.url("countries"));
       if (country.status === 200) {
         return country.data;
       }
@@ -25,7 +26,9 @@ const useCountry = create<IHookCountryProps>((_set) => ({
   },
   create: async (name: string) => {
     try {
-      const country = await axios.post("countries/new", { name: name });
+      const country = await axios.post(myApi.url("countries/new"), {
+        name: name,
+      });
       if (country.status === 200 && country.data.status) {
         toast({
           type: EToastType.success,
@@ -40,7 +43,7 @@ const useCountry = create<IHookCountryProps>((_set) => ({
     try {
       const token = Cookies.get("access-token");
       const country = await axios.patch(
-        "countries/" + id,
+        myApi.url("countries/" + id),
         { name: name },
         {
           headers: {
@@ -62,7 +65,7 @@ const useCountry = create<IHookCountryProps>((_set) => ({
   delete: async (id: number) => {
     try {
       const token = Cookies.get("access-token");
-      const country = await axios.delete("countries/" + id, {
+      const country = await axios.delete(myApi.url("countries/" + id), {
         headers: {
           Authorization: `Bearer ${token}`,
         },

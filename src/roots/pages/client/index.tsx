@@ -8,6 +8,8 @@ import UserProfilePlaylistPage from './profile/UserProfilePlaylistPage';
 import MyProfileLayout from './profile/personal/my-profile.layout';
 import MyProfilePlaylistPage from './profile/personal/MyProfilePlaylistPage';
 import SearchResultPage from './search/page';
+import MyProfileVideoPage from './profile/personal/MyProfileVideoPage';
+import MyProfileInfoPage from './profile/personal/MyProfileInfoPage';
 export {
     ClientLayout,
     HomePage,
@@ -18,5 +20,7 @@ export {
     UserProfilePlaylistPage,
     MyProfileLayout,
     MyProfilePlaylistPage,
-    SearchResultPage
+    SearchResultPage,
+    MyProfileVideoPage,
+    MyProfileInfoPage
 }

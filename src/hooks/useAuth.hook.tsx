@@ -64,9 +64,16 @@ const useAuth = create<IHookAuthProps>((set) => ({
         }));
         Cookies.set("isAuthentication", "true", { expires: 4 });
         Cookies.set("access-token", data_res.token, { expires: 4 });
+        toast({
+          message: response.data.message,
+          type: EToastType.success,
+        });
         navigate("/");
       } else {
-        alert(response?.data?.message);
+        toast({
+          message: response.data.message,
+          type: EToastType.error,
+        });
       }
     } catch (error) {
       console.log(error);
@@ -133,7 +140,10 @@ const useAuth = create<IHookAuthProps>((set) => ({
     try {
       const response = await axios.post(myApi.url("auth/register"), data);
       if (response.status === 200) {
-        alert(response.data.message);
+        toast({
+          message: response.data.message,
+          type: response.data.status ? EToastType.success : EToastType.error,
+        });
         if (response.data.status) {
           navigate("/auth/login");
         }

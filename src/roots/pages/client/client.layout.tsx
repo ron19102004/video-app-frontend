@@ -18,7 +18,7 @@ const ClientLayout: React.FC = () => {
           setIsOpenSideBar(!isOpenSideBar);
         }}
       />
-      <div className="lg:flex min-h-screen pt-16">
+      <div className="lg:flex min-h-screen">
         <SideBar
           className="transition-all max-h-screen overflow-auto"
           isOpen={isOpenSideBar}
@@ -26,7 +26,7 @@ const ClientLayout: React.FC = () => {
             setIsOpenSideBar(false);
           }}
         />
-        <main className="client-layout-main flex-1 px-4 max-h-screen overflow-y-auto overflow-x-hidden">
+        <main className="client-layout-main flex-1 px-4 max-h-screen overflow-y-auto overflow-x-hidden py-16">
           <Outlet />
         </main>
       </div>

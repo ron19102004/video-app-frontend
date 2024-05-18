@@ -39,7 +39,7 @@ const NavTopClient: React.FC<INavTopClientProps> = ({
           }}
         />
         {userCurrent?.fullName && (
-          <Heading value={`Welcome ${userCurrent?.fullName}`} size={Size.LG} />
+          <Heading value={`Welcome ${userCurrent?.fullName}`} size={Size.XXL} className="font-1"/>
         )}
       </div>
       <button className="block lg:hidden" onClick={menuMobileOnClick}>

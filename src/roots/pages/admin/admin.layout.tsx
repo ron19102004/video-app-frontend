@@ -2,10 +2,11 @@ import React, { useContext } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../contexts/auth.context";
 import { ERole } from "../../../hooks/type";
+import { NavTopAdmin } from "../../../components/nav";
 
 const AdminLayout: React.FC = () => {
   const navigate = useNavigate();
-  const { userCurrent , isAuthenticated} = useContext(AuthContext);
+  const { userCurrent, isAuthenticated } = useContext(AuthContext);
   if (!isAuthenticated) {
     navigate("/auth/login", { replace: true });
     return;
@@ -15,9 +16,12 @@ const AdminLayout: React.FC = () => {
     return;
   }
   return (
-    <div>
-      <Outlet />
-    </div>
+    <section className="min-w-screen min-h-screen bg-bg-color text-white">
+      <NavTopAdmin />
+      <main>
+        <Outlet />
+      </main>
+    </section>
   );
 };
 
